@@ -1,33 +1,16 @@
 // notificaciones.js
 // Envía un aviso al dueño (email y/o WhatsApp) cada vez que se completa
 // una inscripción a través del bot.
+//
+// El email se envía con la API de Resend (HTTPS) en vez de SMTP tradicional,
+// porque Render (plan gratuito) bloquea las conexiones SMTP salientes.
 
-const nodemailer = require("nodemailer");
 const twilio = require("twilio");
 
 const twilioClient = twilio(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
-
-let transporter = null;
-function getTransporter() {
-  if (!transporter) {
-    transporter = nodemailer.createTransport({
-      service: "gmail", // Cambiar si usás otro proveedor de email
-      auth: {
-        user: process.env.NOTIFY_EMAIL_USER,
-        pass: process.env.NOTIFY_EMAIL_PASS, // Usar una "contraseña de aplicación" de Gmail
-      },
-      tls: {
-        // Evita el error "self-signed certificate in certificate chain" que
-        // ocurre en algunos Windows/antivirus al validar la cadena de certificados.
-        rejectUnauthorized: false,
-      },
-    });
-  }
-  return transporter;
-}
 
 async function enviarEmailInscripcion(inscripcion) {
   const { nombre, telefono, curso, sede } = inscripcion;
@@ -41,12 +24,24 @@ async function enviarEmailInscripcion(inscripcion) {
     <p><i>Recibido automáticamente desde el bot de WhatsApp.</i></p>
   `;
 
-  await getTransporter().sendMail({
-    from: process.env.NOTIFY_EMAIL_USER,
-    to: process.env.OWNER_EMAIL,
-    subject: `Nueva inscripción: ${nombre} - ${curso}`,
-    html,
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "Infotech Bot <onboarding@resend.dev>",
+      to: [process.env.OWNER_EMAIL],
+      subject: `Nueva inscripción: ${nombre} - ${curso}`,
+      html,
+    }),
   });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Resend respondió ${response.status}: ${errorBody}`);
+  }
 }
 
 async function enviarWhatsappInscripcion(inscripcion) {
@@ -68,7 +63,9 @@ async function enviarWhatsappInscripcion(inscripcion) {
 
 async function notificarNuevaInscripcion(inscripcion) {
   const resultados = await Promise.allSettled([
-    process.env.OWNER_EMAIL ? enviarEmailInscripcion(inscripcion) : Promise.resolve(),
+    process.env.RESEND_API_KEY && process.env.OWNER_EMAIL
+      ? enviarEmailInscripcion(inscripcion)
+      : Promise.resolve(),
     process.env.OWNER_WHATSAPP_NUMBER
       ? enviarWhatsappInscripcion(inscripcion)
       : Promise.resolve(),
