@@ -1,0 +1,131 @@
+{
+  "students": [
+    {
+      "id": "ALU-001",
+      "ci": "6957631",
+      "name": "Noelia Raquel Feltes Pereira",
+      "phone": "0983796226",
+      "course": "Operador en Informática",
+      "monthly_fee": 120000,
+      "branch_id": "2",
+      "status": "Activo"
+    },
+    {
+      "id": "ALU-002",
+      "ci": "5583366",
+      "name": "Liliana Vallejos Ortigoza",
+      "phone": "0986207335",
+      "course": "Operador en Informática",
+      "monthly_fee": 150000,
+      "branch_id": 2,
+      "status": "Activo"
+    },
+    {
+      "id": "ALU-003",
+      "ci": "5078966",
+      "name": "Nidia Duarte Chamorro",
+      "phone": "0991968323",
+      "course": "Operador en Informática",
+      "monthly_fee": 150000,
+      "branch_id": 2,
+      "status": "Activo"
+    }
+  ],
+  "payments": [
+    {
+      "student": "ALU-003",
+      "month": "Septiembre",
+      "amount": 150000,
+      "date": "2026-09-12"
+    }
+  ],
+  "attendance": [
+    {
+      "student": "ALU-001",
+      "date": "2026-09-12",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-001",
+      "date": "2026-09-05",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-002",
+      "date": "2026-09-12",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-002",
+      "date": "2026-08-29",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-002",
+      "date": "2026-08-22",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-002",
+      "date": "2026-08-15",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-003",
+      "date": "2026-09-12",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-003",
+      "date": "2026-09-19",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-003",
+      "date": "2026-08-29",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-003",
+      "date": "2026-08-22",
+      "status": "Presente"
+    },
+    {
+      "student": "ALU-003",
+      "date": "2026-08-15",
+      "status": "Presente"
+    }
+  ],
+  "courses": [
+    {
+      "name": "Operador en Informática",
+      "fee": 120000
+    },
+    {
+      "name": "Técnico en Informática",
+      "fee": 150000
+    },
+    {
+      "name": "Cajero Computarizado",
+      "fee": 150000
+    },
+    {
+      "name": "Diseño Gráfico",
+      "fee": 150000
+    }
+  ],
+  "branches": [
+    {
+      "id": "1",
+      "name": "Santa Cecilia"
+    },
+    {
+      "id": "2",
+      "name": "9na Línea Yroysa"
+    },
+    {
+      "id": "3",
+      "name": "4ta Línea Yroysa"
+    }
+  ]
+}

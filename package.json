@@ -1,0 +1,17 @@
+{
+  "name": "infotech-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "Bot de WhatsApp para Infotech Technology: FAQ de cursos/sedes + flujo de inscripcion con notificacion por email/WhatsApp",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14",
+    "twilio": "^5.3.0"
+  }
+}
